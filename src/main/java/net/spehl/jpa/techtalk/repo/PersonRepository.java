@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
-    @Query("SELECT p FROM Person p LEFT JOIN FETCH p.attributes LEFT JOIN FETCH p.transactions WHERE p.balance < :balance")
-    List<Person> personByBalanceFetch(@Param("balance") double balance);
-
     @Query("SELECT p FROM Person p WHERE p.balance < :balance")
     List<Person> personByBalanceNoFetch(@Param("balance") double balance);
 

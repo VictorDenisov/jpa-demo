@@ -1,7 +1,7 @@
 package net.spehl.jpa.techtalk.model;
 
-import com.sun.istack.internal.NotNull;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,12 @@ import javax.persistence.OneToMany;
 public class Person {
 
     @Column @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID id;
+
+    @Column(nullable = false)
+    @org.hibernate.annotations.Type(type="pg-uuid")
+    private UUID tenantId;
 
     @Column(nullable = false)
     private String name;
@@ -23,21 +28,17 @@ public class Person {
     @Column(nullable = false)
     private Double balance;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Attribute> attributes;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<AtmTxn> transactions;
-
     public Person() {}
 
     public Person(String name,
-                  Double balance) {
+                  Double balance,
+                  UUID tenantId) {
         this.name = name;
         this.balance = balance;
+        this.tenantId = tenantId;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -57,21 +58,12 @@ public class Person {
         this.balance = balance;
     }
 
-    public Set<Attribute> getAttributes() {
-        return attributes;
+    public UUID getTenantId() {
+        return tenantId;
     }
 
-    public void setAttributes(Set<Attribute> attributes) {
-        this.attributes = attributes;
-        attributes.forEach((a)->a.setOwner(this));
-    }
-
-    public Set<AtmTxn> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<AtmTxn> transactions) {
-        this.transactions = transactions;
-        transactions.forEach((a)->a.setOwner(this));
+    public void setTenantId(UUID tenantId) {
+        this.tenantId = tenantId;
     }
 }
+
