@@ -1,5 +1,7 @@
 package net.spehl.jpa.techtalk.model;
 
+import net.spehl.jpa.techtalk.hibernate.JsonbType;
+
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -18,7 +20,7 @@ public class Person {
     @org.hibernate.annotations.Type(type="pg-uuid")
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="tenant_id")
     @org.hibernate.annotations.Type(type="pg-uuid")
     private UUID tenantId;
 
@@ -28,14 +30,20 @@ public class Person {
     @Column(nullable = false)
     private Double balance;
 
+    @Column(nullable = false)
+    @org.hibernate.annotations.Type(type="JsonbType")
+    private String json;
+
     public Person() {}
 
     public Person(String name,
                   Double balance,
-                  UUID tenantId) {
+                  UUID tenantId,
+                  String json) {
         this.name = name;
         this.balance = balance;
         this.tenantId = tenantId;
+        this.json = json;
     }
 
     public UUID getId() {
@@ -65,5 +73,25 @@ public class Person {
     public void setTenantId(UUID tenantId) {
         this.tenantId = tenantId;
     }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", tenantId=" + tenantId +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                ", json='" + json + '\'' +
+                '}';
+    }
 }
+
 

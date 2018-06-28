@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import net.spehl.jpa.techtalk.hibernate.JsonbType;
 import net.spehl.jpa.techtalk.model.Person;
 
 public class Generator {
@@ -19,7 +20,7 @@ public class Generator {
     }
 
     private static Person randomPerson() {
-        return new Person(randomString(20), ((double)random.nextInt(100000))/100, UUID.randomUUID());
+        return new Person(randomString(20), ((double)random.nextInt(100000))/100, UUID.randomUUID(), "{}");
     }
 
     private static String randomString(int len) {

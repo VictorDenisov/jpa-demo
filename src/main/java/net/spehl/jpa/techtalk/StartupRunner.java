@@ -19,8 +19,12 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        Person p = new Person("name", 100.0, UUID.randomUUID());
+        Person p = new Person("name", 100.0, UUID.randomUUID(), "{\"name\": \"value\"}");
 
         repo.save(p);
+
+        for (Person i : repo.findAll()) {
+            System.out.println(i.toString());
+        }
     }
 }

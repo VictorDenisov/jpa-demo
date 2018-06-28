@@ -11,7 +11,7 @@ public class TechTalkApplication {
 
 	@Configuration
 	@EnableJpaRepositories
-	@EntityScan("net.spehl.jpa.techtalk.model")
+	//@EntityScan("net.spehl.jpa.techtalk.model")
 	public static class AppConfig { }
 
 	public static void main(String[] args) {
